@@ -1,42 +1,72 @@
 steps:
-- id: 'python tests'
+- id: 'python hello world tests'
   name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args:
   - '-c'
   - |
     lang=python
-    declare -a apps=("hello-world" "guestbook")
-    gcloud builds submit . --config cloudbuild.tmpl.yaml --substitutions _DIR=${lang},_LANG=${lang},_APP=${apps[0]}
-    gcloud builds submit . --config cloudbuild.tmpl.yaml --substitutions _DIR=${lang},_LANG=${lang},_APP=${apps[1]}
+    app="hello-world"
+    gcloud builds submit . --config cloudbuild.tmpl.yaml --substitutions _DIR=${lang},_LANG=${lang},_APP=${app}
   waitFor: ['-'] # start immediately
 
-- id: 'java tests'
+- id: 'python guestbook tests'
+  name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    lang=python
+    app="guestbook"
+    gcloud builds submit . --config cloudbuild.tmpl.yaml --substitutions _DIR=${lang},_LANG=${lang},_APP=${app}
+  waitFor: ['-'] # start immediately
+
+- id: 'java hello world tests'
   name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args:
   - '-c'
   - |
     lang=java
-    declare -a apps=("hello-world" "guestbook")
-    gcloud builds submit . --config cloudbuild.tmpl.yaml --substitutions _DIR=${lang},_LANG=${lang},_APP=${apps[0]}
-    gcloud builds submit . --config cloudbuild.tmpl.yaml --substitutions _DIR=${lang},_LANG=${lang},_APP=${apps[1]}
+    app="hello-world"
+    gcloud builds submit . --config cloudbuild.tmpl.yaml --substitutions _DIR=${lang},_LANG=${lang},_APP=${app}
+  waitFor: ['-'] # start immediately
+  
+- id: 'java guestbook tests'
+  name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    lang=java
+    app="guestbook"
+    gcloud builds submit . --config cloudbuild.tmpl.yaml --substitutions _DIR=${lang},_LANG=${lang},_APP=${app}
   waitFor: ['-'] # start immediately
 
-- id: 'dotnet tests'
+- id: 'dotnet hello world tests'
   name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args:
   - '-c'
   - |
     lang=dotnet
-    declare -a apps=("hello-world" "guestbook")
-    gcloud builds submit . --config cloudbuild.tmpl.yaml --substitutions _DIR=${lang},_LANG=${lang},_APP=${apps[0]}
-# WARNING: guestbook test coverage is currently temporarily disabled
-#    gcloud builds submit . --config cloudbuild.tmpl.yaml --substitutions _DIR=${lang},_LANG=${lang},_APP=${apps[1]}
+    app="hello-world"
+    gcloud builds submit . --config cloudbuild.tmpl.yaml --substitutions _DIR=${lang},_LANG=${lang},_APP=${app}
   waitFor: ['-'] # start immediately
 
-- id: 'go tests'
+# WARNING: guestbook test coverage is currently temporarily disabled
+# - id: 'dotnet guestbook tests'
+#   name: 'gcr.io/cloud-builders/gcloud'
+#   entrypoint: 'bash'
+#   args:
+#   - '-c'
+#   - |
+#     lang=dotnet
+#     app="guestbook"
+#    gcloud builds submit . --config cloudbuild.tmpl.yaml --substitutions _DIR=${lang},_LANG=${lang},_APP=${app}
+#  waitFor: ['-'] # start immediately
+
+- id: 'go hello world tests'
   name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args:
@@ -44,22 +74,42 @@ steps:
   - |
     lang=go
     dir=golang
-    declare -a apps=("hello-world" "guestbook")
-    gcloud builds submit . --config cloudbuild.tmpl.yaml --substitutions _DIR=${dir},_LANG=${lang},_APP=${apps[0]}
-    gcloud builds submit . --config cloudbuild.tmpl.yaml --substitutions _DIR=${dir},_LANG=${lang},_APP=${apps[1]}
+    app="hello-world"
+    gcloud builds submit . --config cloudbuild.tmpl.yaml --substitutions _DIR=${dir},_LANG=${lang},_APP=${app}
   waitFor: ['-']
 
-- id: 'nodejs tests'
+- id: 'go guestbook tests'
+  name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    lang=go
+    dir=golang
+    app="guestbook"
+    gcloud builds submit . --config cloudbuild.tmpl.yaml --substitutions _DIR=${dir},_LANG=${lang},_APP=${app}
+  waitFor: ['-']
+
+- id: 'nodejs hello world tests'
   name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args:
   - '-c'
   - |
     lang=nodejs
-    declare -a apps=("hello-world" "guestbook")
-    gcloud builds submit . --config cloudbuild.tmpl.yaml --substitutions _DIR=${lang},_LANG=${lang},_APP=${apps[0]}
-    gcloud builds submit . --config cloudbuild.tmpl.yaml --substitutions _DIR=${lang},_LANG=${lang},_APP=${apps[1]}
+    app="hello-world"
+    gcloud builds submit . --config cloudbuild.tmpl.yaml --substitutions _DIR=${lang},_LANG=${lang},_APP=${app}
   waitFor: ['-']
 
+- id: 'nodejs guestbook tests'
+  name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    lang=nodejs
+    app="guestbook"
+    gcloud builds submit . --config cloudbuild.tmpl.yaml --substitutions _DIR=${lang},_LANG=${lang},_APP=${app}
+  waitFor: ['-']
 timeout: 2500s
 
